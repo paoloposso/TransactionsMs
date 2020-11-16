@@ -15,50 +15,52 @@ namespace Transactions.Tests.Service
         AccountTransactionService Service;
 
         List<AccountTransaction> LocalData = new List<AccountTransaction>();
-        private AccountTransaction InsertedTransaction;
+        private AccountTransaction ExistingTransaction;
+        private string InexistentTransactionId;
 
         [OneTimeSetUp]
         public void Setup()
         {
-            InsertedTransaction = new AccountTransaction(Guid.NewGuid().ToString().Replace("-", string.Empty), 50, "505050", DateTime.Now);
+            InexistentTransactionId = Guid.NewGuid().ToString().Replace("-", "");
+            ExistingTransaction = new AccountTransaction(Guid.NewGuid().ToString().Replace("-", string.Empty), 50, "505050", DateTime.Now);
 
             Repository = Substitute.For<IAccountTransactionRepository>();
-            Repository.Insert(Arg.Any<AccountTransaction>()).Returns(Task.FromResult(InsertedTransaction));
-            Repository.Delete(Arg.Any<string>()).Returns(Task.CompletedTask);
 
-            Repository.GetById(Arg.Is(InsertedTransaction.Id)).Returns(InsertedTransaction);
+            Repository.Insert(Arg.Any<AccountTransaction>()).Returns(Task.FromResult(ExistingTransaction));
+            Repository.Delete(Arg.Any<string>()).Returns(Task.CompletedTask);
+            Repository.GetById(Arg.Is(ExistingTransaction.Id)).Returns(ExistingTransaction);
+            Repository.GetById(Arg.Is(InexistentTransactionId)).Returns(Task.FromResult(new AccountTransaction("", 0, "", DateTime.MinValue)));
 
             Service = new AccountTransactionService(Repository);
         }
 
         [Test]
+        public async Task ShouldInsertTransaction()
+        {
+            var accountTransaction = await Service.Save(500, "a4567810123");
+
+            Assert.IsNotNull(accountTransaction);
+            Assert.AreNotEqual("", accountTransaction.Id);
+        }
+
+        [Test]
         public async Task ShouldGetTransactionById()
         {
-            var id = InsertedTransaction.Id;
+            var id = ExistingTransaction.Id;
 
-            var accountTransaction = await Service.GetById(InsertedTransaction.Id);
+            var accountTransaction = await Service.GetById(ExistingTransaction.Id);
 
             Assert.AreEqual(accountTransaction.Id, id);
         }
 
         [Test]
-        public async Task ShouldInsertTransaction()
+        public async Task ShouldNotGetTransactionById()
         {
-            var id = InsertedTransaction.Id;
+            var id = ExistingTransaction.Id;
 
-            await Service.Save(500, "a4567810123");
+            var accountTransaction = await Repository.GetById(InexistentTransactionId);
 
-            Assert.Pass();
+            Assert.AreNotEqual(accountTransaction.Id, id);
         }
-
-        // [Test]
-        // public async Task ShouldNotGetTransactionById()
-        // {
-        //     var id = InsertedTransaction.Id;
-
-        //     var accountTransaction = await Repository.GetById("dfdfsd");
-
-        //     Assert.AreNotEqual(accountTransaction.Id, id);
-        // }
     }
 }

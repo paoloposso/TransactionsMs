@@ -13,13 +13,11 @@ namespace Transactions.Domain.Services
             AccountTransactionRepository = accountTransactionRepository;
         }
 
-        public async Task<string> Save(double value, string accountId)
+        public async Task<AccountTransaction> Save(double value, string accountId)
         {
             var transaction = new AccountTransaction(value, accountId);
 
-            await AccountTransactionRepository.Insert(transaction);
-
-            return transaction.Id;
+            return await AccountTransactionRepository.Insert(transaction);
         }
 
         public async Task<AccountTransaction> GetById(string accountId)
