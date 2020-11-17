@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Transactions.Domain.Entities;
-using Transactions.Domain.Repository;
+using Transactions.UseCases.Entities;
+using Transactions.UseCases.Repository;
 
-namespace Transactions.Domain.Services
+namespace Transactions.UseCases.Services
 {
     public class AccountTransactionService
     {
@@ -15,7 +15,7 @@ namespace Transactions.Domain.Services
 
         public async Task<AccountTransaction> Save(double value, string accountId)
         {
-            var transaction = new AccountTransaction(value, accountId);
+            var transaction = GenerateNewTransaction(value, accountId);
 
             return await AccountTransactionRepository.Insert(transaction);
         }
@@ -23,6 +23,11 @@ namespace Transactions.Domain.Services
         public async Task<AccountTransaction> GetById(string accountId)
         {
             return await AccountTransactionRepository.GetById(accountId);
+        }
+
+        private AccountTransaction GenerateNewTransaction(double value, string accountId)
+        {
+            return new AccountTransaction(value, accountId);
         }
     }
 }

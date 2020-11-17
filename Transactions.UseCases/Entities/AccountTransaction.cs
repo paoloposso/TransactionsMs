@@ -1,9 +1,13 @@
 using System;
 
-namespace Transactions.Domain.Entities
+namespace Transactions.UseCases.Entities
 {
     public class AccountTransaction : BaseEntity
     {
+        public double Value { get; private set; }
+        public DateTime Created { get; private set; }
+        public string AccountId { get; private set; }
+
         public AccountTransaction(double value, string accountId)
         {
             GenerateId();
@@ -19,9 +23,5 @@ namespace Transactions.Domain.Entities
             AccountId = accountId;
             Created = created;
         }
-
-        public double Value { get; private set; }
-        public DateTime Created { get; private set; }
-        public string AccountId { get; private set; }
     }
 }

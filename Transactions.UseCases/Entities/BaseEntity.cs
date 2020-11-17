@@ -1,6 +1,6 @@
 using System;
 
-namespace Transactions.Domain.Entities
+namespace Transactions.UseCases.Entities
 {
     public abstract class BaseEntity
     {
