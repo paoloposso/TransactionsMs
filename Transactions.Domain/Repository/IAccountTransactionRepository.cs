@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Transactions.UseCases.Entities;
+using Transactions.Domain.Entities;
 
-namespace Transactions.UseCases.Repository
+namespace Transactions.Domain.Repository
 {
     public interface IAccountTransactionRepository
     {

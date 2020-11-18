@@ -1,6 +1,6 @@
 using System;
 
-namespace Transactions.UseCases.Entities
+namespace Transactions.Domain.Entities
 {
     public class AccountTransaction : BaseEntity
     {

@@ -1,11 +1,11 @@
 using NUnit.Framework;
 using NSubstitute;
-using Transactions.UseCases.Repository;
-using Transactions.UseCases.Entities;
+using Transactions.Domain.Repository;
+using Transactions.Domain.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
-using Transactions.UseCases.Services;
+using Transactions.Domain.Services;
 
 namespace Transactions.Tests.Service
 {

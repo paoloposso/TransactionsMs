@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Transactions.UseCases.Entities;
-using Transactions.UseCases.Repository;
+using Transactions.Domain.Entities;
+using Transactions.Domain.Repository;
 
-namespace Transactions.UseCases.Services
+namespace Transactions.Domain.Services
 {
     public class AccountTransactionService
     {
