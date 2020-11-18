@@ -20,7 +20,7 @@ namespace Transactions.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult<DebitResponse>> Post([FromBody]DebitRequest debitRequest)
         {
             try
