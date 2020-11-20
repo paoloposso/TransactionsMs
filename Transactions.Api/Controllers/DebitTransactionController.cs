@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Transactions.Api.Dto;
-using Transactions.Domain.Services;
+using Transactions.Domain.UseCases;
 
 namespace Transactions.Api.Controllers
 {
@@ -13,7 +13,7 @@ namespace Transactions.Api.Controllers
     public class DebitTransactionController : ControllerBase
     {
         private readonly ILogger<DebitTransactionController> _logger;
-        private readonly AccountTransactionService _accountTransactionsService;
+        private readonly AccountTransactionUseCases _accountTransactionsService;
 
         public DebitTransactionController(ILogger<DebitTransactionController> logger)
         {
@@ -21,13 +21,13 @@ namespace Transactions.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<DebitResponse>> Post([FromBody]DebitRequest debitRequest)
+        public async Task<ActionResult> Post([FromBody]DebitRequest debitRequest)
         {
             try
             {
-                var accountTransaction = await _accountTransactionsService.Save(debitRequest.Value, debitRequest.AccountId);
+                var accountTransaction = await _accountTransactionsService.SaveDebitTransaction(debitRequest.Value, debitRequest.AccountId, debitRequest.Description);
 
-                return Ok(new DebitResponse { Successful = true });
+                return Ok(new DebitResponse { Successful = true, TransactionId = accountTransaction.Id });
             }
             catch (Exception ex)
             {

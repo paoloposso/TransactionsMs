@@ -5,14 +5,14 @@ using Transactions.Domain.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
-using Transactions.Domain.Services;
+using Transactions.Domain.UseCases;
 
 namespace Transactions.Tests.Service
 {
     public class TransactionServiceTest
     {
         IAccountTransactionRepository Repository;
-        AccountTransactionService Service;
+        AccountTransactionUseCases Service;
 
         List<AccountTransaction> LocalData = new List<AccountTransaction>();
         private AccountTransaction ExistingTransaction;
@@ -31,13 +31,22 @@ namespace Transactions.Tests.Service
             Repository.GetById(Arg.Is(ExistingTransaction.Id)).Returns(ExistingTransaction);
             Repository.GetById(Arg.Is(InexistentTransactionId)).Returns(Task.FromResult(new AccountTransaction("", 0, "", DateTime.MinValue)));
 
-            Service = new AccountTransactionService(Repository);
+            Service = new AccountTransactionUseCases(Repository);
         }
 
         [Test]
-        public async Task ShouldInsertTransaction()
+        public async Task ShouldInsertCreditTransaction()
         {
-            var accountTransaction = await Service.Save(500, "a4567810123");
+            var accountTransaction = await Service.SaveCreditTransaction(500, "a4567810123");
+
+            Assert.IsNotNull(accountTransaction);
+            Assert.AreNotEqual("", accountTransaction.Id);
+        }
+
+        [Test]
+        public async Task ShouldInsertDebitTransaction()
+        {
+            var accountTransaction = await Service.SaveDebitTransaction(500, "a4567810123", "test");
 
             Assert.IsNotNull(accountTransaction);
             Assert.AreNotEqual("", accountTransaction.Id);

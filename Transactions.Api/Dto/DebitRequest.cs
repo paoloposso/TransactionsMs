@@ -4,5 +4,6 @@ namespace Transactions.Api.Dto
     {
         public double Value { get; set; }
         public string AccountId { get; set; }
+        public string Description { get; set; }
     }
 }

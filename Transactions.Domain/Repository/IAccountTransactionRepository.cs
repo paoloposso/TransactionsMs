@@ -6,9 +6,9 @@ namespace Transactions.Domain.Repository
 {
     public interface IAccountTransactionRepository
     {
-         Task<AccountTransaction> Insert(AccountTransaction accountTransaction);
-         Task Delete(string id);
-         Task<AccountTransaction> GetById(string id);
-         Task<IList<AccountTransaction>> GetByAccountId(string accountId);
+        Task<AccountTransaction> Insert(AccountTransaction accountTransaction);
+        Task Delete(string id);
+        Task<AccountTransaction> GetById(string id);
+        Task<IList<AccountTransaction>> GetByAccountId(string accountId);
     }
 }
