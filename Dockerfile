@@ -6,6 +6,7 @@ COPY *.sln .
 COPY ./Transactions.Api/Transactions.Api.csproj ./Transactions.Api/
 COPY ./Transactions.Domain/*.csproj ./Transactions.Domain/
 COPY ./Transactions.Tests/*.csproj ./Transactions.Tests/
+COPY ./Transactions.Infra.Db.Mongo/*.csproj ./Transactions.Infra.Db.Mongo/
 
 RUN dotnet restore
 
@@ -17,7 +18,7 @@ FROM build AS publish
 
 WORKDIR /app/Transactions.Api
 
-RUN dotnet publish -o out -c Release
+RUN dotnet publish -o out
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine AS runtime
 WORKDIR /app

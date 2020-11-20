@@ -15,9 +15,10 @@ namespace Transactions.Api.Controllers
         private readonly ILogger<DebitTransactionController> _logger;
         private readonly AccountTransactionUseCases _accountTransactionsService;
 
-        public DebitTransactionController(ILogger<DebitTransactionController> logger)
+        public DebitTransactionController(ILogger<DebitTransactionController> logger, AccountTransactionUseCases accountTransactionsService)
         {
             _logger = logger;
+            _accountTransactionsService = accountTransactionsService;
         }
 
         [HttpPost]

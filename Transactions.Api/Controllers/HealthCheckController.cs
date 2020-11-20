@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Transactions.Domain.UseCases;
 
@@ -9,9 +11,8 @@ namespace Transactions.Api.Controllers
     public class HealthCheckController : ControllerBase
     {
         private readonly ILogger<HealthCheckController> _logger;
-        private readonly AccountTransactionUseCases _accountTransactionsService;
 
-        public HealthCheckController(ILogger<HealthCheckController> logger)
+        public HealthCheckController(ILogger<HealthCheckController> logger, IConfiguration configuration)
         {
             _logger = logger;
         }
@@ -19,8 +20,13 @@ namespace Transactions.Api.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            return Ok("OK");
-        }
+            _logger.LogInformation("Info");
+            _logger.LogWarning("Warning");
+            _logger.LogError("Error");
 
+            _logger.LogInformation($"MongoDb Uri: {Environment.GetEnvironmentVariable("MONGODB_URI")}");
+
+            return Ok("Ok");
+        }
     }
 }
