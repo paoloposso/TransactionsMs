@@ -5,14 +5,14 @@ using Transactions.Domain.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
-using Transactions.Domain.UseCases;
+using Transactions.Domain.Services;
 
 namespace Transactions.Tests.Service
 {
-    public class TransactionServiceTest
+    public class TransactionServiceTestx
     {
         IAccountTransactionRepository Repository;
-        AccountTransactionUseCases Service;
+        AccountTransactionService Service;
 
         List<AccountTransaction> LocalData = new List<AccountTransaction>();
         private AccountTransaction ExistingTransaction;
@@ -31,7 +31,7 @@ namespace Transactions.Tests.Service
             Repository.GetById(Arg.Is(ExistingTransaction.Id)).Returns(ExistingTransaction);
             Repository.GetById(Arg.Is(InexistentTransactionId)).Returns(Task.FromResult(new AccountTransaction("", 0, "", DateTime.MinValue)));
 
-            Service = new AccountTransactionUseCases(Repository);
+            Service = new AccountTransactionService(Repository);
         }
 
         [Test]

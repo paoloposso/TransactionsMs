@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Transactions.Domain.Repository;
-using Transactions.Domain.UseCases;
+using Transactions.Domain.Services;
 using Transactions.Infra.Db.Mongo;
 
 namespace Transactions.Api
@@ -36,7 +36,7 @@ namespace Transactions.Api
             services.AddSingleton<IConfiguration>(Configuration);
 
             services.AddTransient<IAccountTransactionRepository, AccountTransactionRepository>();
-            services.AddTransient<AccountTransactionUseCases>();
+            services.AddTransient<AccountTransactionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

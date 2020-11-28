@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Transactions.Domain.UseCases;
 
 namespace Transactions.Api.Controllers
 {

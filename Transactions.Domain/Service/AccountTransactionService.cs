@@ -2,22 +2,19 @@ using System.Threading.Tasks;
 using Transactions.Domain.Entities;
 using Transactions.Domain.Repository;
 
-namespace Transactions.Domain.UseCases
+namespace Transactions.Domain.Services
 {
-    public class AccountTransactionUseCases
+    public class AccountTransactionService
     {
         IAccountTransactionRepository AccountTransactionRepository;
 
-        public AccountTransactionUseCases(IAccountTransactionRepository accountTransactionRepository)
+        public AccountTransactionService(IAccountTransactionRepository accountTransactionRepository)
         {
             AccountTransactionRepository = accountTransactionRepository;
         }
 
         public async Task<AccountTransaction> SaveCreditTransaction(double value, string accountId)
-        {
-            if (value < 0)
-                value = value * -1;
-            
+        {            
             var transaction = GenerateNewTransaction(value, accountId);
 
             return await AccountTransactionRepository.Insert(transaction);

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Transactions.Api.Dto;
-using Transactions.Domain.UseCases;
+using Transactions.Domain.Services;
 
 namespace Transactions.Api.Controllers
 {
@@ -13,9 +13,9 @@ namespace Transactions.Api.Controllers
     public class DebitTransactionController : ControllerBase
     {
         private readonly ILogger<DebitTransactionController> _logger;
-        private readonly AccountTransactionUseCases _accountTransactionsService;
+        private readonly AccountTransactionService _accountTransactionsService;
 
-        public DebitTransactionController(ILogger<DebitTransactionController> logger, AccountTransactionUseCases accountTransactionsService)
+        public DebitTransactionController(ILogger<DebitTransactionController> logger, AccountTransactionService accountTransactionsService)
         {
             _logger = logger;
             _accountTransactionsService = accountTransactionsService;
